@@ -1,0 +1,35 @@
+name: Run OCI Script
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # Roda automaticamente a cada 15 minutos
+  workflow_dispatch: # Ativa o botão para você rodar manualmente quando quiser
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, xml, curl
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Run Autocreate Script
+        run: php index.php
+        env:
+          OCI_REGION: ${{ secrets.OCI_REGION }}
+          OCI_USER_ID: ${{ secrets.OCI_USER_ID }}
+          OCI_TENANCY_ID: ${{ secrets.OCI_TENANCY_ID }}
+          OCI_KEY_FINGERPRINT: ${{ secrets.OCI_KEY_FINGERPRINT }}
+          OCI_PRIVATE_KEY_FILENAME: ${{ secrets.OCI_PRIVATE_KEY_FILENAME }}
+          OCI_COMPARTMENT_OCID: ${{ secrets.OCI_COMPARTMENT_OCID }}
+          INSTANCE_OCPU: ${{ secrets.INSTANCE_OCPU }}
+          INSTANCE_RAM: ${{ secrets.INSTANCE_RAM }}
+          OCI_SSH_PUBLIC_KEY: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
