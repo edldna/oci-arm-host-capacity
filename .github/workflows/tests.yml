@@ -2,8 +2,8 @@ name: Run OCI Script
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # Roda automaticamente a cada 15 minutos
-  workflow_dispatch: # Ativa o botão para você rodar manualmente quando quiser
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
 
 jobs:
   run-script:
@@ -30,6 +30,7 @@ jobs:
           OCI_KEY_FINGERPRINT: ${{ secrets.OCI_KEY_FINGERPRINT }}
           OCI_PRIVATE_KEY_FILENAME: ${{ secrets.OCI_PRIVATE_KEY_FILENAME }}
           OCI_COMPARTMENT_OCID: ${{ secrets.OCI_COMPARTMENT_OCID }}
+          OCI_SUBNET_ID: ${{ secrets.OCI_SUBNET_ID }}
           INSTANCE_OCPU: ${{ secrets.INSTANCE_OCPU }}
           INSTANCE_RAM: ${{ secrets.INSTANCE_RAM }}
           OCI_SSH_PUBLIC_KEY: ${{ secrets.OCI_SSH_PUBLIC_KEY }}
